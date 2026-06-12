@@ -1,6 +1,12 @@
+from flask import Flask, request
 import sqlite3
 
-def get_user(username):
+app = Flask(__name__)
+
+@app.route("/user")
+def get_user():
+    username = request.args.get("username")
+
     conn = sqlite3.connect("users.db")
 
     query = (
@@ -9,4 +15,4 @@ def get_user(username):
         "'"
     )
 
-    return conn.execute(query).fetchall()
+    return str(conn.execute(query).fetchall())
